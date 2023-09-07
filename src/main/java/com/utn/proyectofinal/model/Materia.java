@@ -13,7 +13,6 @@ public class Materia {
     private int anio;
     private int cuatrimestre;
     private  Profesor profesor;
-    private int idDeLaMateria;
 
 
     //control de correlativas
@@ -47,9 +46,6 @@ public class Materia {
     public Profesor getProfesor() {
         return profesor;
     }
-    public int getIdDeLaMateria() {
-        return idDeLaMateria;
-    }
     public List<Materia> getCorrelatividades(){
         return this.correlatividades;
     }
@@ -71,9 +67,6 @@ public class Materia {
     public void setProfesor(Profesor profesor_p) {
         this.profesor = profesor_p;
     }
-    public void setIdDeLaMateria(int idDeLaMateria_p) {
-        this.idDeLaMateria = idDeLaMateria_p;
-    }
     public void agregarCorrelativa(Materia correlativa_p){
         this.correlatividades.add(correlativa_p);
     }
@@ -86,14 +79,12 @@ public class Materia {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Materia materia = (Materia) o;
-        return idDeLaMateria == materia.idDeLaMateria && anio == materia.anio && cuatrimestre == materia.cuatrimestre && Objects.equals(nombre, materia.nombre) && Objects.equals(profesor, materia.profesor) && Objects.equals(correlatividades, materia.correlatividades);
+        return id == materia.id && anio == materia.anio && cuatrimestre == materia.cuatrimestre && Objects.equals(nombre, materia.nombre) && Objects.equals(profesor, materia.profesor) && Objects.equals(correlatividades, materia.correlatividades);
     }
 
-
-    //sirve??
     @Override
     public int hashCode() {
-        return Objects.hash(idDeLaMateria, nombre, anio, cuatrimestre, profesor, correlatividades);
+        return Objects.hash(id, nombre, anio, cuatrimestre, profesor, correlatividades);
     }
 
 }
