@@ -13,7 +13,7 @@ import java.util.Random;
 public class AlumnoDaoImp implements AlumnoDao{
 
     //esta es "la base de datos" donde se guardan los alumnos
-    private static Map<Long, Alumno> RepositorioAlumnos = new HashMap<>();
+    private static final Map<Long, Alumno> RepositorioAlumnos = new HashMap<>();
 
     @Override
     public void GuardarAlumno(Alumno a) {
@@ -25,13 +25,25 @@ public class AlumnoDaoImp implements AlumnoDao{
 
     @Override
     public Alumno BuscarAlumnoPorApellido(String apellidoAlumno_p) {
-        for (Alumno a: RepositorioAlumnos.values()) {
-            if (a.getApellido().equals(apellidoAlumno_p)){
-                return a;
+        for (Alumno al: RepositorioAlumnos.values()) {
+            if (al.getApellido().equals(apellidoAlumno_p)){
+                return al;
             }
         }
         throw new ResponseStatusException(
                 HttpStatus.NOT_FOUND, "No existe ese apellido en los registros de alumnos."
+        );
+    }
+
+    @Override
+    public Alumno BuscarAlumnoPorDni(long dni) {
+        for (Alumno al: RepositorioAlumnos.values()) {
+            if (al.getDni()==dni){
+                return al;
+            }
+        }
+        throw new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "No existe ese dni en los registros de alumnos."
         );
     }
 }
