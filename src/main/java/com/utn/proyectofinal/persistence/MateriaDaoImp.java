@@ -1,7 +1,7 @@
 package com.utn.proyectofinal.persistence;
 
 import com.utn.proyectofinal.model.Materia;
-import com.utn.proyectofinal.persistence.exeptions.MateriaNotFoundException;
+import com.utn.proyectofinal.persistence.exeptions.Error_Materia_No_Encontrada;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,12 +18,12 @@ public class MateriaDaoImp implements MateriaDao{
     }
 
     @Override
-    public Materia BuscarMateriaPorId(int idMateria) throws MateriaNotFoundException {
+    public Materia BuscarMateriaPorId(int idMateria) throws Error_Materia_No_Encontrada {
         for (Materia m: repositorioMaterias.values()) {
-            if (idMateria == m.getIdDeLaMateria()) {
+            if (idMateria == m.getId()) {
                 return m;
             }
         }
-        throw new MateriaNotFoundException("No se encontró la materia con id " + idMateria);
+        throw new Error_Materia_No_Encontrada("No se encontró la materia con id " + idMateria);
     }
 }
