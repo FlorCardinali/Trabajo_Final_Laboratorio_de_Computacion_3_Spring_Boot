@@ -6,5 +6,6 @@ public interface ProfesorDao {
 
     void guardarProfesor(Profesor p);
     Profesor buscarProfesorPorId(Long id) throws Error_Profesor_No_Encontrado;
-    void modificarProfesor(Profesor p);
+    Profesor actualizarProfesor(Profesor p) throws Error_Profesor_No_Encontrado;
+    boolean elimiarProfesor(long id) throws Error_Profesor_No_Encontrado;
 }

@@ -7,8 +7,8 @@ public class Profesor {
     private String titulo;
 
     //constructor
-    public Profesor(long id, String nombre_p, String apellido_p, String titulo_p) {
-        this.id = id;
+    public Profesor(){};
+    public Profesor(String nombre_p, String apellido_p, String titulo_p) {
         this.nombre = nombre_p;
         this.apellido = apellido_p;
         this.titulo = titulo_p;

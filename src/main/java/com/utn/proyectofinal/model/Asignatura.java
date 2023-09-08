@@ -33,6 +33,9 @@ public class Asignatura {
     public void setMateria(Materia materia) {
         this.materia = materia;
     }
+    public void setEstado(EstadoAsignatura e){
+        this.estado = e;
+    }
     public void setCursarEstado() {
         this.estado = EstadoAsignatura.CURSADA;
     }

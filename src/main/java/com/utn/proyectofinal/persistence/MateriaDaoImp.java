@@ -3,9 +3,7 @@ package com.utn.proyectofinal.persistence;
 import com.utn.proyectofinal.model.Materia;
 import com.utn.proyectofinal.persistence.exeptions.Error_Materia_No_Encontrada;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class MateriaDaoImp implements MateriaDao{
 
@@ -26,4 +24,10 @@ public class MateriaDaoImp implements MateriaDao{
         }
         throw new Error_Materia_No_Encontrada("No se encontró la materia con id " + idMateria);
     }
+
+    @Override
+    public List<Materia> ObtenerTodasLasMaterias() {
+        return new ArrayList<Materia>(repositorioMaterias.values());
+    }
+
 }

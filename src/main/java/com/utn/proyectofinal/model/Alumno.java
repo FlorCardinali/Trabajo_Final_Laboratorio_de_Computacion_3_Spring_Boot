@@ -1,5 +1,7 @@
 package com.utn.proyectofinal.model;
 
+import com.utn.proyectofinal.model.exeptions.Error_Asignatura_No_encontrada;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +44,14 @@ public class Alumno {
     public List<Asignatura> getAsignaturas(){ //c
         return this.asignaturas;
     }
+    public Asignatura getAsignaturaPorIdMateria(long idMateria) throws Error_Asignatura_No_encontrada {
+        for (Asignatura a: asignaturas){
+            if (a.getMateria().getId() == idMateria){
+                return a;
+            }
+        }
+        throw new Error_Asignatura_No_encontrada("El alumno no posee la asignatura");
+    }
 
     //setters
 
@@ -63,5 +73,13 @@ public class Alumno {
 
     public void agregarAsignatura(Asignatura asignatura_p){
         this.asignaturas.add(asignatura_p);
+    }
+    public void actualizarAsignatura(Asignatura asignatura_p){
+        for (Asignatura a: asignaturas) {
+            if (a.getMateria().getNombre().equals(asignatura_p.getMateria().getNombre())) {
+                a.setEstado(asignatura_p.getEstado());
+                a.setNota(asignatura_p.getNota().get());
+            }
+        }
     }
 }
