@@ -1,15 +1,12 @@
 package com.utn.proyectofinal.business.imp;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.utn.proyectofinal.business.AlumnoService;
 import com.utn.proyectofinal.business.AsignaturaService;
 import com.utn.proyectofinal.model.Alumno;
 import com.utn.proyectofinal.model.Asignatura;
 import com.utn.proyectofinal.model.EstadoAsignatura;
-import com.utn.proyectofinal.model.Materia;
 import com.utn.proyectofinal.model.dto.AlumnoDto;
 import com.utn.proyectofinal.model.exeptions.Error_Asignatura_No_encontrada;
-import com.utn.proyectofinal.model.exeptions.Error_Correlatividad_No_Aprobada;
 import com.utn.proyectofinal.model.exeptions.Error_Estado_Incorrecto;
 import com.utn.proyectofinal.model.exeptions.Error_Nota_Insuficiente;
 import com.utn.proyectofinal.persistence.AlumnoDao;
@@ -17,7 +14,6 @@ import com.utn.proyectofinal.persistence.exeptions.Error_Alumno_No_Encontrado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Random;
 
 @Service
 public class AlumnoServiceImp implements AlumnoService {
@@ -29,11 +25,31 @@ public class AlumnoServiceImp implements AlumnoService {
 
 
     @Override
-    public Asignatura aprobarAsignatura(int materiaId, int nota, long dni) throws Error_Estado_Incorrecto, Error_Nota_Insuficiente, Error_Correlatividad_No_Aprobada, Error_Asignatura_No_encontrada, Error_Alumno_No_Encontrado {
-        Alumno alumno = alumnoDao.BuscarAlumnoPorDni(dni);
-        Asignatura a = alumno.aprobarAsignatura(materiaId, nota);
-        alumnoDao.actualizarAlumno(alumno);
+    public Asignatura agregarAsignatura(Asignatura a, long idAlumno) throws Error_Alumno_No_Encontrado, Error_Estado_Incorrecto {
+        Alumno al = alumnoDao.BuscarAlumnoPorId(idAlumno);
+        al.agregarAsignatura(a);
         return a;
+    }
+
+    @Override
+    public Asignatura modificarAsignatura(Asignatura a,long idAsignatura, long idAlumno) throws Error_Estado_Incorrecto, Error_Nota_Insuficiente, Error_Alumno_No_Encontrado, Error_Asignatura_No_encontrada {
+        EstadoAsignatura e = a.getEstado();
+        int nota = a.getNota();
+        Alumno al = buscarAlumnoPorId(idAlumno);
+        for (Asignatura asignatura :al.getAsignaturas()){
+            if (asignatura.getIdAsigantura() == idAsignatura){
+                if (e==EstadoAsignatura.CURSADA){
+                    asignatura.cursarAsignatura();
+                    al.actualizarAsignatura(asignatura);
+                    return asignatura;
+                } else if (e==EstadoAsignatura.APROBADA){
+                    asignatura.aprobarAsignatura(nota);
+                    al.actualizarAsignatura(asignatura);
+                    return asignatura;
+                }
+            }
+        }
+        throw new Error_Asignatura_No_encontrada("el alumno "+ al.getNombre() +" " + al.getApellido() + "No posee la asignatura.");
     }
 
 

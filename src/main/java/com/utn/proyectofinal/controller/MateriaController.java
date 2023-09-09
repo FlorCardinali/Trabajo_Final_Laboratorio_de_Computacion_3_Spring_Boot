@@ -1,7 +1,6 @@
 package com.utn.proyectofinal.controller;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.utn.proyectofinal.business.MateriaService;
 import com.utn.proyectofinal.business.ProfesorService;
 import com.utn.proyectofinal.model.Materia;
@@ -25,7 +24,7 @@ public class MateriaController {
 
     @GetMapping
     public List<Materia> getMaterias() {
-        return materiaService.getAllMaterias();
+        return materiaService.todasLasMaterias();
     }
 
     @PostMapping

@@ -4,22 +4,20 @@ import com.utn.proyectofinal.model.exeptions.Error_Nota_Insuficiente;
 
 import java.util.Optional;
 public class Asignatura {
+    private long idAsigantura;
     private Materia materia;
     private EstadoAsignatura estado;
-    private int nota;
+    private int nota= -1;
 
     //constructores
 
     public Asignatura() {
     }
-    public Asignatura(Materia materia) {
-        this.materia = materia;
-        this.estado = EstadoAsignatura.NO_CURSADA;
-    }
 
     //getters
-    public Optional<Integer> getNota() {
-        return Optional.ofNullable(nota);
+    public int getNota() {
+        //-1 no seteado.
+        return nota;
     }
     public Materia getMateria() {
         return materia;
@@ -28,6 +26,9 @@ public class Asignatura {
         return estado;
     }
 
+    public long getIdAsigantura() {
+        return idAsigantura;
+    }
 
     //setters
     public void setMateria(Materia materia) {
@@ -36,16 +37,25 @@ public class Asignatura {
     public void setEstado(EstadoAsignatura e){
         this.estado = e;
     }
-    public void cursarAsignatura() {
-        this.estado = EstadoAsignatura.CURSADA;
+
+    public Asignatura cursarAsignatura() throws Error_Estado_Incorrecto {
+        if (this.estado==EstadoAsignatura.CURSADA){
+            throw new Error_Estado_Incorrecto("Se intento cursar una materia que ya esta cursada.");
+        } else if (this.estado == EstadoAsignatura.APROBADA){
+            throw new Error_Estado_Incorrecto("Se intento cursar una amteria que ya esta aprobada");
+        } else {
+            this.estado= EstadoAsignatura.CURSADA;
+            return this;
+        }
     }
-    public void aprobarAsignatura(int nota) throws Error_Estado_Incorrecto, Error_Nota_Insuficiente {
+    public Asignatura aprobarAsignatura(int nota) throws Error_Estado_Incorrecto, Error_Nota_Insuficiente {
         if (!this.estado.equals(EstadoAsignatura.CURSADA)) {
-            throw new Error_Estado_Incorrecto("La materia " + this.materia.getNombre() + " aprobar debe estar cursada antes de ser aprobada.");
+            throw new Error_Estado_Incorrecto("La materia " + this.materia.getNombre() + " debe estar cursada antes de ser aprobada.");
         }
         if (nota>=4) {
             this.estado = EstadoAsignatura.APROBADA;
             this.nota = nota;
+            return this;
         }else {
             throw new Error_Nota_Insuficiente("La nota debe ser cuatro o superior para aprobar la materia " + this.materia.getNombre());
         }
@@ -54,5 +64,7 @@ public class Asignatura {
         this.nota = nota;
     }
 
-
+    public void setIdAsigantura(long idAsigantura) {
+        this.idAsigantura = idAsigantura;
+    }
 }

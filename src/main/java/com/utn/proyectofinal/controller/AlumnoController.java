@@ -1,8 +1,10 @@
 package com.utn.proyectofinal.controller;
 
 import com.utn.proyectofinal.business.AlumnoService;
+import com.utn.proyectofinal.business.AsignaturaService;
 import com.utn.proyectofinal.model.Alumno;
 import com.utn.proyectofinal.model.Asignatura;
+import com.utn.proyectofinal.model.EstadoAsignatura;
 import com.utn.proyectofinal.model.dto.AlumnoDto;
 import com.utn.proyectofinal.model.exeptions.Error_Asignatura_No_encontrada;
 import com.utn.proyectofinal.model.exeptions.Error_Correlatividad_No_Aprobada;
@@ -27,20 +29,18 @@ public class AlumnoController {
             return ResponseEntity.notFound().build();
         }
     }
+    @PutMapping("/agregarAsignatura/{idAlumno}")
+    public Asignatura agregarAsignatura(@PathVariable long idAlumno,@RequestBody Asignatura a) throws Error_Estado_Incorrecto, Error_Alumno_No_Encontrado {
+        return alumnoService.agregarAsignatura(a,idAlumno);
+    }
 
     @PutMapping("/{id}")
     public Alumno modificarAlumno(@PathVariable long id, @RequestBody AlumnoDto alumnoDto) throws Error_Alumno_No_Encontrado {
         return alumnoService.actualizarAlumno(alumnoDto,id);
     }
-    @PutMapping("/aprobar")
-    public ResponseEntity<Asignatura> aprobarAsignatura(@RequestBody int materiaId, int nota, long dni) throws Error_Asignatura_No_encontrada, Error_Estado_Incorrecto, Error_Correlatividad_No_Aprobada, Error_Alumno_No_Encontrado, Error_Nota_Insuficiente {
-
-        Asignatura a = alumnoService.aprobarAsignatura(materiaId,nota,dni);
-        if (a!=null){
-            return ResponseEntity.ok(a);
-        }else {
-            return ResponseEntity.internalServerError().build();
-        }
+    @PutMapping("/{idAlumno}/asignatura/{idAsignatura}")
+    public Asignatura modificarAsignatura(@PathVariable long idAlumno, long idAsignatura, @RequestBody Asignatura asignatura) throws Error_Asignatura_No_encontrada, Error_Estado_Incorrecto, Error_Correlatividad_No_Aprobada, Error_Alumno_No_Encontrado, Error_Nota_Insuficiente {
+        return alumnoService.modificarAsignatura(asignatura,idAsignatura,idAlumno);
     }
     @GetMapping
     public ResponseEntity<Alumno> buscarAlumno(@RequestParam String apellido) throws Error_Alumno_No_Encontrado {

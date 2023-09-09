@@ -17,7 +17,7 @@ public class Alumno {
     private long dni;
 
     // atributo para lasa asignaturas que este alumno cursa.
-    private List<Asignatura> asignaturas;
+    private List<Asignatura> asignaturas = new ArrayList<>();
 
 
     //constructores
@@ -73,24 +73,25 @@ public class Alumno {
 
     //setters especiales
 
-    public void cursarAsignatura(Asignatura asignatura_p){
-        if (asignatura_p.getEstado()!=EstadoAsignatura.CURSADA){
-            asignatura_p.setEstado(EstadoAsignatura.CURSADA);
-            this.asignaturas.add(asignatura_p);
+    public void agregarAsignatura(Asignatura asignatura_p) throws Error_Estado_Incorrecto {
+        for (Asignatura a: asignaturas){
+            if (a.getIdAsigantura()==asignatura_p.getIdAsigantura()){
+                throw new Error_Estado_Incorrecto("La asignatura ya existe en el alumno" + this.nombre);
+            }
         }
+        asignatura_p.setEstado(EstadoAsignatura.CURSADA);
+        this.asignaturas.add(asignatura_p);
     }
 
-    public Asignatura aprobarAsignatura(long materiaId, int nota) throws Error_Estado_Incorrecto, Error_Nota_Insuficiente, Error_Asignatura_No_encontrada {
+    public Asignatura actualizarAsignatura(Asignatura nueva) throws Error_Estado_Incorrecto, Error_Nota_Insuficiente, Error_Asignatura_No_encontrada {
         for (Asignatura a: asignaturas){
-            if (a.getMateria().getId() == materiaId){
+            if (a.getIdAsigantura() == nueva.getIdAsigantura()){
                 asignaturas.remove(a);
-                a.aprobarAsignatura(nota);
-                asignaturas.add(a);
+                asignaturas.add(nueva);
                 return a;
             }
         }
-        Asignatura as = getAsignaturaPorIdMateria(materiaId);
-        throw new Error_Asignatura_No_encontrada("El alumno no cursa " + as.getMateria().getNombre());
+        throw new Error_Asignatura_No_encontrada("No se actualizo la asignatura, el alumno no la posee ");
     }
 
 }

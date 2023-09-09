@@ -5,7 +5,6 @@ import com.utn.proyectofinal.persistence.exeptions.Error_Alumno_No_Encontrado;
 
 public interface AlumnoDao {
     Alumno GuardarAlumno(Alumno a);
-
     Alumno actualizarAlumno(Alumno a) throws Error_Alumno_No_Encontrado;
     Alumno eliminarAlumno(long id) throws Error_Alumno_No_Encontrado;
     Alumno BuscarAlumnoPorApellido(String apellidoAlumno) throws Error_Alumno_No_Encontrado;

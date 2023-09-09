@@ -40,7 +40,7 @@ public class MateriaServiceImp implements MateriaService {
     }
 
     @Override
-    public List<Materia> getAllMaterias() {
+    public List<Materia> todasLasMaterias() {
         return materiaDao.ObtenerTodasLasMaterias();
     }
 
@@ -51,14 +51,14 @@ public class MateriaServiceImp implements MateriaService {
 
     @Override
     public List<Materia> getMateriasProfesor(long idProfe) {
-        List<Materia> materias = this.getAllMaterias();
+        List<Materia> materias = this.todasLasMaterias();
         List<Materia> materiasProfe = new ArrayList<>();
         for (Materia m: materias){
             if (m.getProfesor().getId()==idProfe){
                 materiasProfe.add(m);
             }
         }
-        Collections.sort(materiasProfe, Comparator.comparing(Materia -> Materia.getProfesor().getNombre()));
+        materiasProfe.sort(Comparator.comparing(Materia::getNombre));
         return materiasProfe;
     }
 }

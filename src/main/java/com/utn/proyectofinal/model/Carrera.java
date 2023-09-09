@@ -4,7 +4,7 @@ import java.util.List;
 public class Carrera {
     private final String nombre;
     private int cantidadAnios;
-    private final List<Materia> materiasList;
+    private final List<Materia> listaMaterias;
 
 
     //constructor
@@ -12,12 +12,12 @@ public class Carrera {
         this.nombre = nombre_p;
         this.cantidadAnios = cantidadAnios_p;
 
-        materiasList = new ArrayList<>();
+        listaMaterias = new ArrayList<>();
     }
 
     //setters
     public void setAgregarMateria(Materia materia_p) {
-        materiasList.add(materia_p);
+        listaMaterias.add(materia_p);
     }
     public void setCantidadAnios(int cantidadAnios) {
         this.cantidadAnios = cantidadAnios;
@@ -31,7 +31,7 @@ public class Carrera {
     public int getCantidadAnios() {
         return cantidadAnios;
     }
-    public List<Materia> getMateriasList() {
-        return materiasList;
+    public List<Materia> getListaMaterias() {
+        return listaMaterias;
     }
 }
