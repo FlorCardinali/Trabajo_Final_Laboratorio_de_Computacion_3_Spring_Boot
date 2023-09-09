@@ -14,7 +14,6 @@ public class Materia {
     private int cuatrimestre;
     private  Profesor profesor;
 
-
     //control de correlativas
     private List<Materia> correlatividades;
 
@@ -70,7 +69,9 @@ public class Materia {
     public void agregarCorrelativa(Materia correlativa_p){
         this.correlatividades.add(correlativa_p);
     }
-
+    public void setCorrelatividades(List<Materia> corr){
+        this.correlatividades = corr;
+    }
 
 
     //metodos sobreescribidos

@@ -8,9 +8,10 @@ import com.utn.proyectofinal.persistence.exeptions.Error_Profesor_No_Encontrado;
 import java.util.List;
 
 public interface MateriaService {
-    Materia crearMateria(MateriaDto materia) throws Error_Profesor_No_Encontrado;
+    Materia crearMateria(MateriaDto materia) throws Error_Profesor_No_Encontrado, Error_Materia_No_Encontrada;
 
     List<Materia> getAllMaterias();
 
     Materia getMateriaById(int idMateria) throws Error_Materia_No_Encontrada;
+    List<Materia> getMateriasProfesor(long idProfe);
 }

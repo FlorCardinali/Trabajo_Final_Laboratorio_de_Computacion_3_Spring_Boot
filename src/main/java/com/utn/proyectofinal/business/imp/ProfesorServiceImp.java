@@ -10,23 +10,21 @@ import com.utn.proyectofinal.persistence.exeptions.Error_Profesor_No_Encontrado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
 @Service
 public class ProfesorServiceImp implements ProfesorService {
 
     @Autowired
     private ProfesorDao profesorDao;
-    @Autowired
-    private MateriaService materiaService;
 
 
     @Override
     public Profesor buscarProfesorPorId(long id) throws Error_Profesor_No_Encontrado {
         return profesorDao.buscarProfesorPorId(id);
+    }
+
+    @Override
+    public Profesor buscarProfesorPorApellido(String apellido) throws Error_Profesor_No_Encontrado {
+        return profesorDao.buscarProfesorPorApellido(apellido);
     }
 
     @Override
@@ -53,17 +51,5 @@ public class ProfesorServiceImp implements ProfesorService {
         return profesorDao.elimiarProfesor(id);
     }
 
-    @Override
-    public List<Materia> materiasProfesor(long id) {
-        List<Materia> materias = materiaService.getAllMaterias();
-        List<Materia> materiasProfe = new ArrayList<>();
-        for (Materia m: materias){
-            if (m.getProfesor().getId()==id){
-                materiasProfe.add(m);
-            }
-        }
-        Collections.sort(materiasProfe, Comparator.comparing(Materia -> Materia.getProfesor().getNombre()));
-        return materiasProfe;
-    }
 
 }

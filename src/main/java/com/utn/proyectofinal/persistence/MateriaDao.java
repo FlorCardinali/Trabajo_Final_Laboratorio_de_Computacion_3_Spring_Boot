@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface MateriaDao {
     void GuardarMateria(Materia m);
-    Materia BuscarMateriaPorId(int idMateria) throws Error_Materia_No_Encontrada;
+    Materia BuscarMateriaPorId(long idMateria) throws Error_Materia_No_Encontrada;
     List<Materia> ObtenerTodasLasMaterias();
 }

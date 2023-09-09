@@ -1,6 +1,7 @@
 package com.utn.proyectofinal.controller.handler;
 
 import com.utn.proyectofinal.model.exeptions.Error_Asignatura_No_encontrada;
+import com.utn.proyectofinal.persistence.exeptions.Error_Alumno_No_Encontrado;
 import com.utn.proyectofinal.persistence.exeptions.Error_Materia_No_Encontrada;
 
 import com.utn.proyectofinal.persistence.exeptions.Error_Profesor_No_Encontrado;
@@ -19,7 +20,8 @@ public class UtnResponseEntityExceptionHandler extends ResponseEntityExceptionHa
     @ExceptionHandler(value
             = { Error_Materia_No_Encontrada.class,
                 Error_Profesor_No_Encontrado.class,
-                Error_Asignatura_No_encontrada.class
+                Error_Asignatura_No_encontrada.class,
+                Error_Alumno_No_Encontrado.class
                 })
     protected ResponseEntity<Object> handleNotFound(
             Exception ex, WebRequest request) {

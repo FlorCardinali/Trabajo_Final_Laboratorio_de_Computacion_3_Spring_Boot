@@ -18,7 +18,7 @@ public class CarreraController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarProfesor(@PathVariable long id) throws Error_Profesor_No_Encontrado {
         if (profesorService.eliminarProfesor(id)){
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.ok().build();
         }else {
             return ResponseEntity.notFound().build();
         }
