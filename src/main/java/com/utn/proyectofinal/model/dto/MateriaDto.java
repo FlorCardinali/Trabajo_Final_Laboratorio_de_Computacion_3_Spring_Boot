@@ -1,9 +1,5 @@
 package com.utn.proyectofinal.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.stereotype.Component;
-
 import java.util.List;
 public class MateriaDto {
     private String nombre;

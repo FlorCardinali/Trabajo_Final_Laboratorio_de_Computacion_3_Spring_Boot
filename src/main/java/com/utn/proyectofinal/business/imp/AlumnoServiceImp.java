@@ -1,5 +1,6 @@
 package com.utn.proyectofinal.business.imp;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.utn.proyectofinal.business.AlumnoService;
 import com.utn.proyectofinal.business.AsignaturaService;
 import com.utn.proyectofinal.model.Alumno;
@@ -28,20 +29,11 @@ public class AlumnoServiceImp implements AlumnoService {
 
 
     @Override
-    public void aprobarAsignatura(int materiaId, int nota, long dni) throws Error_Estado_Incorrecto, Error_Nota_Insuficiente, Error_Correlatividad_No_Aprobada, Error_Asignatura_No_encontrada, Error_Alumno_No_Encontrado {
-
-        Asignatura a = asignaturaService.getAsignaturaAlumno(materiaId, dni);
-        for (Materia m: a.getMateria().getCorrelatividades()) {
-            Asignatura cor = asignaturaService.getAsignaturaAlumno(m.getId(), dni);
-            if (!EstadoAsignatura.APROBADA.equals(cor.getEstado())) {
-                throw new Error_Correlatividad_No_Aprobada("La materia " + m.getNombre() + " debe estar aprobada para aprobar " + a.getMateria().getNombre());
-            }
-        }
-        a.setAprobarAsignatura(nota);
-        //asignaturaService.actualizarAsignatura(a);
+    public Asignatura aprobarAsignatura(int materiaId, int nota, long dni) throws Error_Estado_Incorrecto, Error_Nota_Insuficiente, Error_Correlatividad_No_Aprobada, Error_Asignatura_No_encontrada, Error_Alumno_No_Encontrado {
         Alumno alumno = alumnoDao.BuscarAlumnoPorDni(dni);
-        alumno.actualizarAsignatura(a);
-        alumnoDao.GuardarAlumno(alumno);
+        Asignatura a = alumno.aprobarAsignatura(materiaId, nota);
+        alumnoDao.actualizarAlumno(alumno);
+        return a;
     }
 
 
@@ -51,10 +43,7 @@ public class AlumnoServiceImp implements AlumnoService {
         a.setNombre(alumno.getNombre());
         a.setApellido(alumno.getApellido());
         a.setDni(alumno.getDni());
-        Random random = new Random();
-        a.setId(random.nextLong());
-        alumnoDao.GuardarAlumno(a);
-        return a;
+        return alumnoDao.GuardarAlumno(a);
     }
 
     @Override

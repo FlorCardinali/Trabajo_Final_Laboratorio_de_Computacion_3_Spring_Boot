@@ -1,6 +1,8 @@
 package com.utn.proyectofinal.model;
 
 import com.utn.proyectofinal.model.exeptions.Error_Asignatura_No_encontrada;
+import com.utn.proyectofinal.model.exeptions.Error_Estado_Incorrecto;
+import com.utn.proyectofinal.model.exeptions.Error_Nota_Insuficiente;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,15 +73,24 @@ public class Alumno {
 
     //setters especiales
 
-    public void agregarAsignatura(Asignatura asignatura_p){
-        this.asignaturas.add(asignatura_p);
-    }
-    public void actualizarAsignatura(Asignatura asignatura_p){
-        for (Asignatura a: asignaturas) {
-            if (a.getMateria().getNombre().equals(asignatura_p.getMateria().getNombre())) {
-                a.setEstado(asignatura_p.getEstado());
-                a.setNota(asignatura_p.getNota().get());
-            }
+    public void cursarAsignatura(Asignatura asignatura_p){
+        if (asignatura_p.getEstado()!=EstadoAsignatura.CURSADA){
+            asignatura_p.setEstado(EstadoAsignatura.CURSADA);
+            this.asignaturas.add(asignatura_p);
         }
     }
+
+    public Asignatura aprobarAsignatura(long materiaId, int nota) throws Error_Estado_Incorrecto, Error_Nota_Insuficiente, Error_Asignatura_No_encontrada {
+        for (Asignatura a: asignaturas){
+            if (a.getMateria().getId() == materiaId){
+                asignaturas.remove(a);
+                a.aprobarAsignatura(nota);
+                asignaturas.add(a);
+                return a;
+            }
+        }
+        Asignatura as = getAsignaturaPorIdMateria(materiaId);
+        throw new Error_Asignatura_No_encontrada("El alumno no cursa " + as.getMateria().getNombre());
+    }
+
 }

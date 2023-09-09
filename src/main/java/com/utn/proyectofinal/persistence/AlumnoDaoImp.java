@@ -14,11 +14,11 @@ public class AlumnoDaoImp implements AlumnoDao{
     private static final Map<Long, Alumno> RepositorioAlumnos = new HashMap<>();
     long id = 1;
     @Override
-    public void GuardarAlumno(Alumno a) {
+    public Alumno GuardarAlumno(Alumno a) {
         a.setId(this.id);
         this.id++;
         RepositorioAlumnos.put(a.getDni(),a);
-        //no veo necesario que devuelva nada, quizas un ok..
+        return a;
     }
 
     @Override

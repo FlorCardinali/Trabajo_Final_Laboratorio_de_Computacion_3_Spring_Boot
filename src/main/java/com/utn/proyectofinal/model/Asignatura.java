@@ -36,10 +36,10 @@ public class Asignatura {
     public void setEstado(EstadoAsignatura e){
         this.estado = e;
     }
-    public void setCursarEstado() {
+    public void cursarAsignatura() {
         this.estado = EstadoAsignatura.CURSADA;
     }
-    public void setAprobarAsignatura(int nota) throws Error_Estado_Incorrecto, Error_Nota_Insuficiente {
+    public void aprobarAsignatura(int nota) throws Error_Estado_Incorrecto, Error_Nota_Insuficiente {
         if (!this.estado.equals(EstadoAsignatura.CURSADA)) {
             throw new Error_Estado_Incorrecto("La materia " + this.materia.getNombre() + " aprobar debe estar cursada antes de ser aprobada.");
         }
